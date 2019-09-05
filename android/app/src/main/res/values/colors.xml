@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App bar color -->
+    <color name="colorPrimary">#22272d</color>
+    <!-- Status bar color -->
+    <color name="colorPrimaryDark">#22272d</color>
+    <color name="primary_dark">#22272d</color>
+    <!-- Checkboxes and Text Fields color -->
+    <color name="colorAccent">#3c91e6</color>
+    <!-- Text color -->
+    <color name="textColorPrimary">#FFFFFF</color>
+    <!-- Synaptive footer color -->
+    <color name="navigationBarColor">#22272d</color>
+    <!-- Synaptive footer color -->
+    <color name="backgroundColor">#22272d</color>
+    <color name="ic_launcher_background">#22272d</color>
+</resources>

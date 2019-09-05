@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:gravity="center">
+
+    <ImageView
+        android:layout_width="246dp"
+        android:layout_height="226dp"
+        android:layout_marginTop="-24dp"
+        android:src="@drawable/ic_dualdice" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="41dp" />
+
+    <TextView
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:fontFamily="sans-serif"
+        android:gravity="center_horizontal"
+        android:inputType="none"
+        android:text="Diceware Gen"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="12dp" />
+
+    <TextView
+        android:id="@+id/editText2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:inputType="none"
+        android:text="Version 1.0"
+        android:textColor="#464959"
+        android:textSize="14sp" />
+
+
+</LinearLayout>
