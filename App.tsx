@@ -5,48 +5,49 @@
  * @format
  */
 
-import React from 'react';
+import 'react-native-get-random-values';
+import * as React from 'react';
 import {
   Clipboard,
   SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Vibration,
-  Text,
   StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Vibration,
+  View,
 } from 'react-native';
-
-import SplashScreen from 'react-native-splash-screen';
 import Slider from '@react-native-community/slider';
-import 'react-native-get-random-values';
+import SplashScreen from 'react-native-splash-screen';
 
+import * as theme from './src/styles/theme';
 import dicewareList from './src/diceware-min';
 import modularStyles from './src/styles/modular';
-import * as theme from './src/styles/theme';
 
 const {color} = theme;
 
 interface State {
+  data: [number, string][];
   wordCount: number;
-  data: {string: string; number: number}[];
 }
 
 class App extends React.Component<{}, State> {
-  constructor() {
-    super({});
+  constructor(props: {}) {
+    super(props);
 
     this.state = {
-      wordCount: 5,
       data: [],
+      wordCount: 5,
     };
 
-    this.copyToClipboard = this.copyToClipboard.bind(this);
     this.changeCount = this.changeCount.bind(this);
+    this.copyToClipboard = this.copyToClipboard.bind(this);
     this.randomize = this.randomize.bind(this);
   }
   componentDidMount() {
-    this.randomize();
+    const {wordCount} = this.state;
+
+    this.randomize(wordCount);
 
     setTimeout(function() {
       SplashScreen.hide();
@@ -54,7 +55,7 @@ class App extends React.Component<{}, State> {
   }
 
   changeCount(val: number) {
-    this.setState({wordCount: val}, this.randomize);
+    this.setState({wordCount: val}, () => this.randomize(val));
   }
 
   copyToClipboard() {
@@ -64,35 +65,69 @@ class App extends React.Component<{}, State> {
     for (const [number, string] of data) {
       clipData += `${string} `;
     }
+
     Clipboard.setString(clipData.trim());
   }
 
-  randomize() {
-    const {wordCount} = this.state;
-    let data = [...Array(wordCount).keys()];
+  randomize(wordCount: number) {
+    let array = [...Array(wordCount)];
+    const binaryCalc = 4294967295;
+    const calculation = (x: number) => Math.round((x / binaryCalc) * 5 + 1);
+    const max = 6;
+    const min = 1;
+    let val = '';
 
-    const numbers = data.map(() => {
+    /*
+    const numbers = array.map(() => {
+      const array = new Uint32Array(6);
+      let number = '';
+
+      crypto.getRandomValues(array);
+      array.forEach(x => {
+        number += String(calculation(x));
+      });
+
+      return parseInt(number);
+    });
+    */
+
+    const getRandomInt = () => {
+      // Create byte array and fill with 1 random number
+      const range = max - min + 1;
+      const max_range = 256;
+
+      let byteArray = new Uint8Array(1);
+      crypto.getRandomValues(byteArray);
+
+      if (byteArray[0] >= Math.floor(max_range / range) * range)
+        return getRandomInt();
+
+      return min + (byteArray[0] % range);
+    };
+
+    const numbers = array.map(() => {
       const array = new Uint32Array(5);
       let number = '';
 
       crypto.getRandomValues(array);
-
       array.forEach(x => {
-        number += String(Math.round((x / 4294967295) * 5 + 1));
+        number += String(getRandomInt());
       });
 
       return parseInt(number);
     });
 
-    const final = numbers.map(number => {
+    console.log('Numbers is ', numbers);
+
+    const data = numbers.map(number => {
       const string = dicewareList[number];
 
       return [number, string];
     });
 
-    this.setState({data: final}, () => {
-      console.log('Data is now', final);
-      console.log('Data 0 is', final[0]);
+    this.setState({data}, () => {
+      console.log('Data is now', data);
+      console.log('Data 0 is', data[0]);
     });
   }
 
@@ -108,10 +143,7 @@ class App extends React.Component<{}, State> {
               {wordCount === 1 ? '1 word' : `${wordCount} words`}
             </Text>
             <Slider
-              style={[
-                styles.center,
-                {width: '100%', height: 40, marginBottom: 10},
-              ]}
+              style={[styles.center, styles.slider]}
               minimumValue={1}
               maximumValue={10}
               step={1}
@@ -126,11 +158,9 @@ class App extends React.Component<{}, State> {
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 onPressIn={() => Vibration.vibrate(50)}
-                onPress={this.randomize}
+                onPress={() => this.randomize(wordCount)}
                 style={styles.button}>
-                <Text style={styles.h3} selectable>
-                  Randomize
-                </Text>
+                <Text style={styles.h3}>Randomize</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPressIn={() => Vibration.vibrate(50)}
@@ -139,7 +169,7 @@ class App extends React.Component<{}, State> {
                 <Text style={styles.h3}>Copy</Text>
               </TouchableOpacity>
             </View>
-            <View style={styles.listContainer} selectable>
+            <View style={styles.listContainer}>
               {data.map(([number, string]) => (
                 <View
                   key={number}
@@ -177,6 +207,11 @@ const localStyles = StyleSheet.create({
     marginBottom: 30,
     flexDirection: 'row',
     justifyContent: 'space-around',
+  },
+  slider: {
+    width: '100%',
+    height: 40,
+    marginBottom: 10,
   },
 });
 
