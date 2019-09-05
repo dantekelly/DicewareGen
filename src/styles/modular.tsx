@@ -7,26 +7,32 @@ const modularStyles = StyleSheet.create({
     fontFamily: fontFamily.regular,
     color: color.mainTextColor,
     fontSize: fontSize.large,
+    letterSpacing: 1.25,
   },
   h2: {
     fontFamily: fontFamily.medium,
     color: color.mainTextColor,
     fontSize: fontSize.medium,
+    letterSpacing: 0.25,
   },
   h3: {
     fontFamily: fontFamily.medium,
     color: color.mainTextColor,
     fontSize: fontSize.small,
+    letterSpacing: 1.25,
+    textTransform: 'uppercase',
   },
   p1: {
     fontFamily: fontFamily.regular,
     color: color.mainTextColor,
     fontSize: fontSize.regular,
+    letterSpacing: 0.5,
   },
   p2: {
     fontFamily: fontFamily.regular,
     color: color.subTextColor,
     fontSize: fontSize.small,
+    letterSpacing: 0.25,
   },
 
   // Modular
