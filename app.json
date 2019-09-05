@@ -1,0 +1,8 @@
+{
+  "name": "DicewareGen",
+  "displayName": "DicewareGen",
+  "packagerOpts": {
+    "projectRoots": "",
+    "config": "rn-cli.config.js"
+  }
+}

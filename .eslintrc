@@ -1,0 +1,14 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb",
+    "@react-native-community",
+    "plugin:react-native-a11y/recommended"
+  ],
+  "plugins": ["import", "react-native-a11y"],
+  "rules": {
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+    "import/prefer-default-export": "off",
+    "comma-dangle": 0
+  }
+}
