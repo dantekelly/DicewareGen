@@ -21,8 +21,10 @@ const fontSize = {
 };
 
 const fontFamily = {
-  medium: 'Roboto-Medium',
-  regular: 'Roboto-Regular',
+  ...Platform.select({
+    ios: {medium: 'Arial', regular: 'Arial'},
+    android: {medium: 'Roboto-Medium', regular: 'Roboto-Regular'},
+  }),
 };
 
 const padding = 40;

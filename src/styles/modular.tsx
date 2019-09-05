@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import {color, fontSize, fontFamily} from './theme';
 
 const modularStyles = StyleSheet.create({
-  // Default
+  // Text styles
   h1: {
     fontFamily: fontFamily.regular,
     color: color.mainTextColor,
@@ -54,15 +54,7 @@ const modularStyles = StyleSheet.create({
   mainContent: {
     flex: 1,
     paddingHorizontal: 40,
-    paddingVertical: 25,
-  },
-  paragraphContainer: {
-    alignSelf: 'center',
-    marginTop: 10,
-  },
-
-  seperator: {
-    height: 10,
+    paddingVertical: 40,
   },
 });
 
