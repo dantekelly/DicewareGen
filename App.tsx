@@ -12,11 +12,10 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  Vibration,
   Text,
   StatusBar,
 } from 'react-native';
-
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 import SplashScreen from 'react-native-splash-screen';
 import Slider from '@react-native-community/slider';
@@ -26,16 +25,16 @@ import dicewareList from './src/diceware-min';
 import modularStyles from './src/styles/modular';
 import * as theme from './src/styles/theme';
 
-const {color, fontSize, fontFamily} = theme;
+const {color} = theme;
 
 interface State {
   wordCount: number;
-  data: [{string: string; number: number}];
+  data: {string: string; number: number}[];
 }
 
 class App extends React.Component<{}, State> {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super({});
 
     this.state = {
       wordCount: 5,
@@ -47,9 +46,6 @@ class App extends React.Component<{}, State> {
     this.randomize = this.randomize.bind(this);
   }
   componentDidMount() {
-    // do stuff while splash screen is shown
-    // After having done stuff (such as async tasks) hide the splash screen
-
     this.randomize();
 
     setTimeout(function() {
@@ -65,7 +61,6 @@ class App extends React.Component<{}, State> {
     const {data} = this.state;
     let clipData = '';
 
-    console.log('Data is', data);
     for (const [number, string] of data) {
       clipData += `${string} `;
     }
@@ -123,25 +118,22 @@ class App extends React.Component<{}, State> {
               thumbTintColor={color.accentColor}
               minimumTrackTintColor={color.accentColor}
               maximumTrackTintColor={color.accentColor}
-              onValueChange={val => {
+              onValueChange={(val: number) => {
                 this.changeCount(val);
               }}
               value={wordCount}
             />
-            <View
-              style={[
-                {
-                  marginBottom: 30,
-                  flexDirection: 'row',
-                  justifyContent: 'space-around',
-                },
-              ]}>
-              <TouchableOpacity onPress={this.randomize} style={styles.button}>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                onPressIn={() => Vibration.vibrate(50)}
+                onPress={this.randomize}
+                style={styles.button}>
                 <Text style={styles.h3} selectable>
                   Randomize
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
+                onPressIn={() => Vibration.vibrate(50)}
                 onPress={this.copyToClipboard}
                 style={styles.button}>
                 <Text style={styles.h3}>Copy</Text>
@@ -180,6 +172,11 @@ const localStyles = StyleSheet.create({
     width: 'auto',
     elevation: 2,
     backgroundColor: color.accentColor,
+  },
+  buttonContainer: {
+    marginBottom: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
 });
 
