@@ -28,6 +28,12 @@ const modularStyles = StyleSheet.create({
     fontSize: fontSize.regular,
     letterSpacing: 0.5,
   },
+  p1Alt: {
+    fontFamily: fontFamily.regular,
+    color: color.subTextColor,
+    fontSize: fontSize.regular,
+    letterSpacing: 0.25,
+  },
   p2: {
     fontFamily: fontFamily.regular,
     color: color.subTextColor,

@@ -71,35 +71,15 @@ class App extends React.Component<{}, State> {
 
   randomize(wordCount: number) {
     let array = [...Array(wordCount)];
-    const binaryCalc = 4294967295;
-    const calculation = (x: number) => Math.round((x / binaryCalc) * 5 + 1);
-    const max = 6;
-    const min = 1;
-    let val = '';
 
-    /*
-    const numbers = array.map(() => {
-      const array = new Uint32Array(6);
-      let number = '';
-
-      crypto.getRandomValues(array);
-      array.forEach(x => {
-        number += String(calculation(x));
-      });
-
-      return parseInt(number);
-    });
-    */
-
-    const getRandomInt = () => {
+    const getRandomInt = (min: number = 1, max: number = 6) => {
       // Create byte array and fill with 1 random number
       const range = max - min + 1;
-      const max_range = 256;
 
       let byteArray = new Uint8Array(1);
       crypto.getRandomValues(byteArray);
 
-      if (byteArray[0] >= Math.floor(max_range / range) * range)
+      if (byteArray[0] >= Math.floor(256 / range) * range)
         return getRandomInt();
 
       return min + (byteArray[0] % range);
@@ -117,18 +97,13 @@ class App extends React.Component<{}, State> {
       return parseInt(number);
     });
 
-    console.log('Numbers is ', numbers);
-
     const data = numbers.map(number => {
       const string = dicewareList[number];
 
       return [number, string];
     });
 
-    this.setState({data}, () => {
-      console.log('Data is now', data);
-      console.log('Data 0 is', data[0]);
-    });
+    this.setState({data});
   }
 
   render() {
@@ -173,11 +148,15 @@ class App extends React.Component<{}, State> {
               {data.map(([number, string]) => (
                 <View
                   key={number}
-                  style={[styles.center, styles.inline, {marginBottom: 20}]}>
+                  style={[
+                    styles.center,
+                    styles.inline,
+                    {marginBottom: 20, justifyContent: 'center'},
+                  ]}>
                   <Text style={[styles.p1, {marginRight: 10}]} selectable>
                     {string}
                   </Text>
-                  <Text style={styles.p2} selectable>
+                  <Text style={styles.p1Alt} selectable>
                     {number}
                   </Text>
                 </View>

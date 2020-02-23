@@ -2,16 +2,26 @@ import {Dimensions, Platform} from 'react-native';
 
 const {width, height} = Dimensions.get('window');
 const realWidth = height > width ? width : height;
+const lightMode = false;
 
 const normalize = (fontSize: number) =>
   Math.round((fontSize * realWidth) / 375);
 
-const color = {
+let color = {
   accentColor: '#3c91e6',
   backgroundColor: '#292f36',
   mainTextColor: '#ffffff',
   subTextColor: '#464959',
 };
+
+if (lightMode === true) {
+  color = {
+    accentColor: '#3c91e6',
+    backgroundColor: '#FFFFFF',
+    mainTextColor: '#292f36',
+    subTextColor: '#464959',
+  };
+}
 
 const fontSize = {
   large: normalize(34),
